@@ -1,11 +1,11 @@
 colouredlogs: Coloured terminal output for Python's logging module
 ==================================================================
 
-.. image:: https://travis-ci.org/xolox/python-colouredlogs.svg?branch=master
-   :target: https://travis-ci.org/xolox/python-colouredlogs
+NOTE: This is a parody of the great `python-colouredlogs`_ project
+by Peter Odding. Please use that package as I currently have no
+plans to maintain this one. All I've done is `s/color/colour/g`.
 
-.. image:: https://coveralls.io/repos/xolox/python-colouredlogs/badge.png?branch=master
-   :target: https://coveralls.io/r/xolox/python-colouredlogs?branch=master
+.. _`python-colouredlogs`: https://github.com/xolox/python-coloredlogs
 
 The `colouredlogs` package enables coloured terminal output for Python's logging_
 module. The ColouredFormatter_ class inherits from `logging.Formatter`_ and uses
@@ -15,6 +15,7 @@ on Python 2.6, 2.7, 3.4, 3.5, 3.6 and PyPy. On Windows `colouredlogs`
 automatically pulls in Colourama_ as a dependency and enables ANSI escape
 sequence translation using Colourama. Here is a screen shot of the demo that is
 printed when the command ``colouredlogs --demo`` is executed:
+
 
 .. image:: https://colouredlogs.readthedocs.io/en/latest/_images/defaults.png
 
