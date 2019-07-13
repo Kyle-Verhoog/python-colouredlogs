@@ -1,7 +1,7 @@
-coloredlogs: Colored terminal output for Python's logging module
+colouredlogs: Coloured terminal output for Python's logging module
 ================================================================
 
-Welcome to the documentation of `coloredlogs` version |release|! The following
+Welcome to the documentation of `colouredlogs` version |release|! The following
 sections are available:
 
 .. contents::

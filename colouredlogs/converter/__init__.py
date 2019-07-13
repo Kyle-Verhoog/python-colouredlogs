@@ -2,7 +2,7 @@
 #
 # Author: Peter Odding <peter@peterodding.com>
 # Last Change: January 17, 2018
-# URL: https://coloredlogs.readthedocs.io
+# URL: https://colouredlogs.readthedocs.io
 
 """Convert text with ANSI escape sequences to HTML."""
 
@@ -23,10 +23,10 @@ from humanfriendly.terminal import (
 )
 
 # Modules included in our package.
-from coloredlogs.converter.colors import (
-    BRIGHT_COLOR_PALETTE,
-    EIGHT_COLOR_PALETTE,
-    EXTENDED_COLOR_PALETTE,
+from colouredlogs.converter.colours import (
+    BRIGHT_COLOUR_PALETTE,
+    EIGHT_COLOUR_PALETTE,
+    EXTENDED_COLOUR_PALETTE,
 )
 
 # Compiled regular expression that matches leading spaces (indentation).
@@ -88,7 +88,7 @@ def capture(command, encoding='UTF-8'):
             # line invocation which means it's the MacOS (BSD) implementation
             # (in this case we need a temporary file because the command line
             # interface requires it).
-            fd, temporary_file = tempfile.mkstemp(prefix='coloredlogs-', suffix='-capture.txt')
+            fd, temporary_file = tempfile.mkstemp(prefix='colouredlogs-', suffix='-capture.txt')
             try:
                 command_line = ['script', '-q', temporary_file] + list(command)
                 subprocess.Popen(command_line, stdout=dev_null, stderr=dev_null).wait()
@@ -164,56 +164,56 @@ def convert(text, code=True, tabsize=4):
                 if number in compatible_text_styles:
                     styles.update(compatible_text_styles[number])
                     continue
-                # Try to extract a text and/or background color.
-                text_color = None
-                background_color = None
+                # Try to extract a text and/or background colour.
+                text_colour = None
+                background_colour = None
                 if 30 <= number <= 37:
-                    # 30-37 sets the text color from the eight color palette.
-                    text_color = EIGHT_COLOR_PALETTE[number - 30]
+                    # 30-37 sets the text colour from the eight colour palette.
+                    text_colour = EIGHT_COLOUR_PALETTE[number - 30]
                 elif 40 <= number <= 47:
-                    # 40-47 sets the background color from the eight color palette.
-                    background_color = EIGHT_COLOR_PALETTE[number - 40]
+                    # 40-47 sets the background colour from the eight colour palette.
+                    background_colour = EIGHT_COLOUR_PALETTE[number - 40]
                 elif 90 <= number <= 97:
-                    # 90-97 sets the text color from the high-intensity eight color palette.
-                    text_color = BRIGHT_COLOR_PALETTE[number - 90]
+                    # 90-97 sets the text colour from the high-intensity eight colour palette.
+                    text_colour = BRIGHT_COLOUR_PALETTE[number - 90]
                 elif 100 <= number <= 107:
-                    # 100-107 sets the background color from the high-intensity eight color palette.
-                    background_color = BRIGHT_COLOR_PALETTE[number - 100]
+                    # 100-107 sets the background colour from the high-intensity eight colour palette.
+                    background_colour = BRIGHT_COLOUR_PALETTE[number - 100]
                 elif number in (38, 39) and len(ansi_codes) >= 2 and ansi_codes[0] == 5:
-                    # 38;5;N is a text color in the 256 color mode palette,
-                    # 39;5;N is a background color in the 256 color mode palette.
+                    # 38;5;N is a text colour in the 256 colour mode palette,
+                    # 39;5;N is a background colour in the 256 colour mode palette.
                     try:
                         # Consume the 5 following 38 or 39.
                         ansi_codes.pop(0)
-                        # Consume the 256 color mode color index.
-                        color_index = ansi_codes.pop(0)
-                        # Set the variable to the corresponding HTML/CSS color.
+                        # Consume the 256 colour mode colour index.
+                        colour_index = ansi_codes.pop(0)
+                        # Set the variable to the corresponding HTML/CSS colour.
                         if number == 38:
-                            text_color = EXTENDED_COLOR_PALETTE[color_index]
+                            text_colour = EXTENDED_COLOUR_PALETTE[colour_index]
                         elif number == 39:
-                            background_color = EXTENDED_COLOR_PALETTE[color_index]
+                            background_colour = EXTENDED_COLOUR_PALETTE[colour_index]
                     except (ValueError, IndexError):
                         pass
                 # Apply the 'faint' or 'inverse' text style
-                # by manipulating the selected color(s).
-                if text_color and is_inverse:
-                    # Use the text color as the background color and pick a
-                    # text color that will be visible on the resulting
-                    # background color.
-                    background_color = text_color
-                    text_color = select_text_color(*parse_hex_color(text_color))
-                if text_color and is_faint:
-                    # Because I wasn't sure how to implement faint colors
-                    # based on normal colors I looked at how gnome-terminal
+                # by manipulating the selected colour(s).
+                if text_colour and is_inverse:
+                    # Use the text colour as the background colour and pick a
+                    # text colour that will be visible on the resulting
+                    # background colour.
+                    background_colour = text_colour
+                    text_colour = select_text_colour(*parse_hex_colour(text_colour))
+                if text_colour and is_faint:
+                    # Because I wasn't sure how to implement faint colours
+                    # based on normal colours I looked at how gnome-terminal
                     # (my terminal of choice) handles this and it appears
-                    # to just pick a somewhat darker color.
-                    text_color = '#%02X%02X%02X' % tuple(
-                        max(0, n - 40) for n in parse_hex_color(text_color)
+                    # to just pick a somewhat darker colour.
+                    text_colour = '#%02X%02X%02X' % tuple(
+                        max(0, n - 40) for n in parse_hex_colour(text_colour)
                     )
-                if text_color:
-                    styles['color'] = text_color
-                if background_color:
-                    styles['background-color'] = background_color
+                if text_colour:
+                    styles['color'] = text_colour
+                if background_colour:
+                    styles['background-color'] = background_colour
             if styles:
                 token = '<span style="%s">' % ';'.join(k + ':' + v for k, v in sorted(styles.items()))
                 in_span = True
@@ -300,13 +300,13 @@ def html_encode(text):
     return text
 
 
-def parse_hex_color(value):
+def parse_hex_colour(value):
     """
-    Convert a CSS color in hexadecimal notation into its R, G, B components.
+    Convert a CSS colour in hexadecimal notation into its R, G, B components.
 
-    :param value: A CSS color in hexadecimal notation (a string like '#000000').
+    :param value: A CSS colour in hexadecimal notation (a string like '#000000').
     :return: A tuple with three integers (with values between 0 and 255)
-             corresponding to the R, G and B components of the color.
+             corresponding to the R, G and B components of the colour.
     :raises: :exc:`~exceptions.ValueError` on values that can't be parsed.
     """
     if value.startswith('#'):
@@ -327,29 +327,29 @@ def parse_hex_color(value):
         raise ValueError()
 
 
-def select_text_color(r, g, b):
+def select_text_colour(r, g, b):
     """
-    Choose a suitable color for the inverse text style.
+    Choose a suitable colour for the inverse text style.
 
     :param r: The amount of red (an integer between 0 and 255).
     :param g: The amount of green (an integer between 0 and 255).
     :param b: The amount of blue (an integer between 0 and 255).
-    :returns: A CSS color in hexadecimal notation (a string).
+    :returns: A CSS colour in hexadecimal notation (a string).
 
-    In inverse mode the color that is normally used for the text is instead
+    In inverse mode the colour that is normally used for the text is instead
     used for the background, however this can render the text unreadable. The
-    purpose of :func:`select_text_color()` is to make an effort to select a
-    suitable text color. Based on http://stackoverflow.com/a/3943023/112731.
+    purpose of :func:`select_text_colour()` is to make an effort to select a
+    suitable text colour. Based on http://stackoverflow.com/a/3943023/112731.
     """
     return '#000' if (r * 0.299 + g * 0.587 + b * 0.114) > 186 else '#FFF'
 
 
-class ColoredCronMailer(object):
+class ColouredCronMailer(object):
 
     """
-    Easy to use integration between :mod:`coloredlogs` and the UNIX ``cron`` daemon.
+    Easy to use integration between :mod:`colouredlogs` and the UNIX ``cron`` daemon.
 
-    By using :class:`ColoredCronMailer` as a context manager in the command
+    By using :class:`ColouredCronMailer` as a context manager in the command
     line interface of your Python program you make it trivially easy for users
     of your program to opt in to HTML output under ``cron``: The only thing the
     user needs to do is set ``CONTENT_TYPE="text/html"`` in their crontab!
@@ -357,7 +357,7 @@ class ColoredCronMailer(object):
     Under the hood this requires quite a bit of magic and I must admit that I
     developed this code simply because I was curious whether it could even be
     done :-). It requires my :mod:`capturer` package which you can install
-    using ``pip install 'coloredlogs[cron]'``. The ``[cron]`` extra will pull
+    using ``pip install 'colouredlogs[cron]'``. The ``[cron]`` extra will pull
     in the :mod:`capturer` 2.4 or newer which is required to capture the output
     while silencing it - otherwise you'd get duplicate output in the emails
     sent by ``cron``.
@@ -368,7 +368,7 @@ class ColoredCronMailer(object):
         self.is_enabled = 'text/html' in os.environ.get('CONTENT_TYPE', 'text/plain')
         self.is_silent = False
         if self.is_enabled:
-            # We import capturer here so that the coloredlogs[cron] extra
+            # We import capturer here so that the colouredlogs[cron] extra
             # isn't required to use the other functions in this module.
             from capturer import CaptureOutput
             self.capturer = CaptureOutput(merged=True, relay=False)

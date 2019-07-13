@@ -1,10 +1,10 @@
-# Automated tests for the `coloredlogs' package.
+# Automated tests for the `colouredlogs' package.
 #
 # Author: Peter Odding <peter@peterodding.com>
 # Last Change: April 29, 2018
-# URL: https://coloredlogs.readthedocs.io
+# URL: https://colouredlogs.readthedocs.io
 
-"""Automated tests for the `coloredlogs` package."""
+"""Automated tests for the `colouredlogs` package."""
 
 # Standard library modules.
 import contextlib
@@ -25,11 +25,11 @@ from humanfriendly.text import format, random_string
 from mock import MagicMock
 
 # The module we're testing.
-import coloredlogs
-import coloredlogs.cli
-from coloredlogs import (
+import colouredlogs
+import colouredlogs.cli
+from colouredlogs import (
     CHROOT_FILES,
-    ColoredFormatter,
+    ColouredFormatter,
     NameNormalizer,
     decrease_verbosity,
     find_defined_levels,
@@ -46,10 +46,10 @@ from coloredlogs import (
     set_level,
     walk_propagation_tree,
 )
-from coloredlogs.syslog import SystemLogging, match_syslog_handler
-from coloredlogs.converter import (
-    ColoredCronMailer,
-    EIGHT_COLOR_PALETTE,
+from colouredlogs.syslog import SystemLogging, match_syslog_handler
+from colouredlogs.converter import (
+    ColouredCronMailer,
+    EIGHT_COLOUR_PALETTE,
     capture,
     convert,
 )
@@ -85,13 +85,13 @@ PATTERN_INCLUDING_MILLISECONDS = re.compile(r'''
 
 def setUpModule():
     """Speed up the tests by disabling the demo's artificial delay."""
-    os.environ['COLOREDLOGS_DEMO_DELAY'] = '0'
-    coloredlogs.demo.DEMO_DELAY = 0
+    os.environ['COLOUREDLOGS_DEMO_DELAY'] = '0'
+    colouredlogs.demo.DEMO_DELAY = 0
 
 
-class ColoredLogsTestCase(TestCase):
+class ColouredLogsTestCase(TestCase):
 
-    """Container for the `coloredlogs` tests."""
+    """Container for the `colouredlogs` tests."""
 
     def find_system_log(self):
         """Find the system log file or skip the current test."""
@@ -134,7 +134,7 @@ class ColoredLogsTestCase(TestCase):
             # Clean up.
             CHROOT_FILES.pop(0)
             os.unlink(temporary_file)
-        # Test that unreadable chroot files don't break coloredlogs.
+        # Test that unreadable chroot files don't break colouredlogs.
         try:
             CHROOT_FILES.insert(0, temporary_file)
             # Make sure that a usable value is still produced.
@@ -144,7 +144,7 @@ class ColoredLogsTestCase(TestCase):
             CHROOT_FILES.pop(0)
 
     def test_host_name_filter(self):
-        """Make sure :func:`install()` integrates with :class:`~coloredlogs.HostNameFilter()`."""
+        """Make sure :func:`install()` integrates with :class:`~colouredlogs.HostNameFilter()`."""
         install(fmt='%(hostname)s')
         with CaptureOutput() as capturer:
             logging.info("A truly insignificant message ..")
@@ -152,7 +152,7 @@ class ColoredLogsTestCase(TestCase):
             assert find_hostname() in output
 
     def test_program_name_filter(self):
-        """Make sure :func:`install()` integrates with :class:`~coloredlogs.ProgramNameFilter()`."""
+        """Make sure :func:`install()` integrates with :class:`~colouredlogs.ProgramNameFilter()`."""
         install(fmt='%(programname)s')
         with CaptureOutput() as capturer:
             logging.info("A truly insignificant message ..")
@@ -164,7 +164,7 @@ class ColoredLogsTestCase(TestCase):
         init_function = MagicMock()
         with mocked_colorama_module(init_function):
             # Configure logging to the terminal.
-            coloredlogs.install()
+            colouredlogs.install()
             # Ensure that our mock method was called.
             assert init_function.called
 
@@ -174,21 +174,21 @@ class ColoredLogsTestCase(TestCase):
             raise ImportError
         with mocked_colorama_module(init_function):
             # Configure logging to the terminal. It is expected that internally
-            # an ImportError is raised, but the exception is caught and colored
+            # an ImportError is raised, but the exception is caught and coloured
             # output is disabled.
-            coloredlogs.install()
-            # Find the handler that was created by coloredlogs.install().
+            colouredlogs.install()
+            # Find the handler that was created by colouredlogs.install().
             handler, logger = find_handler(logging.getLogger(), match_stream_handler)
             # Make sure that logging to the terminal was initialized.
             assert isinstance(handler.formatter, logging.Formatter)
-            # Make sure colored logging is disabled.
-            assert not isinstance(handler.formatter, ColoredFormatter)
+            # Make sure coloured logging is disabled.
+            assert not isinstance(handler.formatter, ColouredFormatter)
 
     def test_system_logging(self):
-        """Make sure the :class:`coloredlogs.syslog.SystemLogging` context manager works."""
+        """Make sure the :class:`colouredlogs.syslog.SystemLogging` context manager works."""
         system_log_file = self.find_system_log()
         expected_message = random_string(50)
-        with SystemLogging(programname='coloredlogs-test-suite') as syslog:
+        with SystemLogging(programname='colouredlogs-test-suite') as syslog:
             if not syslog:
                 return self.skipTest("couldn't connect to syslog daemon")
             # When I tried out the system logging support on macOS 10.13.1 on
@@ -199,28 +199,28 @@ class ColoredLogsTestCase(TestCase):
         # Retry the following assertion (for up to 60 seconds) to give the
         # logging daemon time to write our log message to disk. This
         # appears to be needed on MacOS workers on Travis CI, see:
-        # https://travis-ci.org/xolox/python-coloredlogs/jobs/325245853
+        # https://travis-ci.org/xolox/python-colouredlogs/jobs/325245853
         retry(lambda: check_contents(system_log_file, expected_message, True))
 
     def test_syslog_shortcut_simple(self):
-        """Make sure that ``coloredlogs.install(syslog=True)`` works."""
+        """Make sure that ``colouredlogs.install(syslog=True)`` works."""
         system_log_file = self.find_system_log()
         expected_message = random_string(50)
         with cleanup_handlers():
             # See test_system_logging() for the importance of this log level.
-            coloredlogs.install(syslog=True)
+            colouredlogs.install(syslog=True)
             logging.error("%s", expected_message)
         # See the comments in test_system_logging() on why this is retried.
         retry(lambda: check_contents(system_log_file, expected_message, True))
 
     def test_syslog_shortcut_enhanced(self):
-        """Make sure that ``coloredlogs.install(syslog='warning')`` works."""
+        """Make sure that ``colouredlogs.install(syslog='warning')`` works."""
         system_log_file = self.find_system_log()
         the_expected_message = random_string(50)
         not_an_expected_message = random_string(50)
         with cleanup_handlers():
             # See test_system_logging() for the importance of these log levels.
-            coloredlogs.install(syslog='error')
+            colouredlogs.install(syslog='error')
             logging.warning("%s", not_an_expected_message)
             logging.error("%s", the_expected_message)
         # See the comments in test_system_logging() on why this is retried.
@@ -228,7 +228,7 @@ class ColoredLogsTestCase(TestCase):
         retry(lambda: check_contents(system_log_file, not_an_expected_message, False))
 
     def test_name_normalization(self):
-        """Make sure :class:`~coloredlogs.NameNormalizer` works as intended."""
+        """Make sure :class:`~colouredlogs.NameNormalizer` works as intended."""
         nn = NameNormalizer()
         for canonical_name in ['debug', 'info', 'warning', 'error', 'critical']:
             assert nn.normalize_name(canonical_name) == canonical_name
@@ -237,14 +237,14 @@ class ColoredLogsTestCase(TestCase):
         assert nn.normalize_name('fatal') == 'critical'
 
     def test_style_parsing(self):
-        """Make sure :func:`~coloredlogs.parse_encoded_styles()` works as intended."""
+        """Make sure :func:`~colouredlogs.parse_encoded_styles()` works as intended."""
         encoded_styles = 'debug=green;warning=yellow;error=red;critical=red,bold'
         decoded_styles = parse_encoded_styles(encoded_styles, normalize_key=lambda k: k.upper())
         assert sorted(decoded_styles.keys()) == sorted(['debug', 'warning', 'error', 'critical'])
-        assert decoded_styles['debug']['color'] == 'green'
-        assert decoded_styles['warning']['color'] == 'yellow'
-        assert decoded_styles['error']['color'] == 'red'
-        assert decoded_styles['critical']['color'] == 'red'
+        assert decoded_styles['debug']['colour'] == 'green'
+        assert decoded_styles['warning']['colour'] == 'yellow'
+        assert decoded_styles['error']['colour'] == 'red'
+        assert decoded_styles['critical']['colour'] == 'red'
         assert decoded_styles['critical']['bold'] is True
 
     def test_is_verbose(self):
@@ -370,7 +370,7 @@ class ColoredLogsTestCase(TestCase):
         assert re.match(r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}\+\d{4}\s', stream.getvalue())
 
     def test_plain_text_output_format(self):
-        """Inspect the plain text output of coloredlogs."""
+        """Inspect the plain text output of colouredlogs."""
         logger = VerboseLogger(random_string(25))
         stream = StringIO()
         install(level=logging.NOTSET, logger=logger, stream=stream)
@@ -400,30 +400,30 @@ class ColoredLogsTestCase(TestCase):
 
     def test_html_conversion(self):
         """Check the conversion from ANSI escape sequences to HTML."""
-        # Check conversion of colored text.
-        for color_name, ansi_code in ANSI_COLOR_CODES.items():
-            ansi_encoded_text = 'plain text followed by %s text' % ansi_wrap(color_name, color=color_name)
+        # Check conversion of coloured text.
+        for colour_name, ansi_code in ANSI_COLOR_CODES.items():
+            ansi_encoded_text = 'plain text followed by %s text' % ansi_wrap(colour_name, color=colour_name)
             expected_html = format(
                 '<code>plain text followed by <span style="color:{css}">{name}</span> text</code>',
-                css=EIGHT_COLOR_PALETTE[ansi_code], name=color_name,
+                css=EIGHT_COLOUR_PALETTE[ansi_code], name=colour_name,
             )
             self.assertEquals(expected_html, convert(ansi_encoded_text))
-        # Check conversion of bright colored text.
+        # Check conversion of bright coloured text.
         expected_html = '<code><span style="color:#FF0">bright yellow</span></code>'
         self.assertEquals(expected_html, convert(ansi_wrap('bright yellow', color='yellow', bright=True)))
-        # Check conversion of text with a background color.
+        # Check conversion of text with a background colour.
         expected_html = '<code><span style="background-color:#DE382B">red background</span></code>'
         self.assertEquals(expected_html, convert(ansi_wrap('red background', background='red')))
-        # Check conversion of text with a bright background color.
+        # Check conversion of text with a bright background colour.
         expected_html = '<code><span style="background-color:#F00">bright red background</span></code>'
         self.assertEquals(expected_html, convert(ansi_wrap('bright red background', background='red', bright=True)))
-        # Check conversion of text that uses the 256 color mode palette as a foreground color.
-        expected_html = '<code><span style="color:#FFAF00">256 color mode foreground</span></code>'
-        self.assertEquals(expected_html, convert(ansi_wrap('256 color mode foreground', color=214)))
-        # Check conversion of text that uses the 256 color mode palette as a background color.
-        expected_html = '<code><span style="background-color:#AF0000">256 color mode background</span></code>'
-        self.assertEquals(expected_html, convert(ansi_wrap('256 color mode background', background=124)))
-        # Check that invalid 256 color mode indexes don't raise exceptions.
+        # Check conversion of text that uses the 256 colour mode palette as a foreground colour.
+        expected_html = '<code><span style="color:#FFAF00">256 colour mode foreground</span></code>'
+        self.assertEquals(expected_html, convert(ansi_wrap('256 colour mode foreground', color=214)))
+        # Check conversion of text that uses the 256 colour mode palette as a background colour.
+        expected_html = '<code><span style="background-color:#AF0000">256 colour mode background</span></code>'
+        self.assertEquals(expected_html, convert(ansi_wrap('256 colour mode background', background=124)))
+        # Check that invalid 256 colour mode indexes don't raise exceptions.
         expected_html = '<code>plain text expected</code>'
         self.assertEquals(expected_html, convert('\x1b[38;5;256mplain text expected\x1b[0m'))
         # Check conversion of bold text.
@@ -439,21 +439,21 @@ class ColoredLogsTestCase(TestCase):
         expected_html = '<code><span style="background-color:#FFC706;color:#000">inverse</span></code>'
         self.assertEquals(expected_html, convert(ansi_wrap('inverse', color='yellow', inverse=True)))
         # Check conversion of URLs.
-        for sample_text in 'www.python.org', 'http://coloredlogs.rtfd.org', 'https://coloredlogs.rtfd.org':
+        for sample_text in 'www.python.org', 'http://colouredlogs.rtfd.org', 'https://colouredlogs.rtfd.org':
             sample_url = sample_text if '://' in sample_text else ('http://' + sample_text)
             expected_html = '<code><a href="%s" style="color:inherit">%s</a></code>' % (sample_url, sample_text)
             self.assertEquals(expected_html, convert(sample_text))
         # Check that the capture pattern for URLs doesn't match ANSI escape
         # sequences and also check that the short hand for the 0 reset code is
         # supported. These are tests for regressions of bugs found in
-        # coloredlogs <= 8.0.
+        # colouredlogs <= 8.0.
         reset_short_hand = '\x1b[0m'
         blue_underlined = ansi_style(color='blue', underline=True)
-        ansi_encoded_text = '<%shttps://coloredlogs.readthedocs.io%s>' % (blue_underlined, reset_short_hand)
+        ansi_encoded_text = '<%shttps://colouredlogs.readthedocs.io%s>' % (blue_underlined, reset_short_hand)
         expected_html = (
             '<code>&lt;<span style="color:#006FB8;text-decoration:underline">'
-            '<a href="https://coloredlogs.readthedocs.io" style="color:inherit">'
-            'https://coloredlogs.readthedocs.io'
+            '<a href="https://colouredlogs.readthedocs.io" style="color:inherit">'
+            'https://colouredlogs.readthedocs.io'
             '</a></span>&gt;</code>'
         )
         self.assertEquals(expected_html, convert(ansi_encoded_text))
@@ -464,40 +464,40 @@ class ColoredLogsTestCase(TestCase):
         actual_output = capture(['echo', expected_output])
         assert actual_output.strip() == expected_output.strip()
 
-    def test_enable_colored_cron_mailer(self):
+    def test_enable_coloured_cron_mailer(self):
         """Test that automatic ANSI to HTML conversion when running under ``cron`` can be enabled."""
         with PatchedItem(os.environ, 'CONTENT_TYPE', 'text/html'):
-            with ColoredCronMailer() as mailer:
+            with ColouredCronMailer() as mailer:
                 assert mailer.is_enabled
 
-    def test_disable_colored_cron_mailer(self):
+    def test_disable_coloured_cron_mailer(self):
         """Test that automatic ANSI to HTML conversion when running under ``cron`` can be disabled."""
         with PatchedItem(os.environ, 'CONTENT_TYPE', 'text/plain'):
-            with ColoredCronMailer() as mailer:
+            with ColouredCronMailer() as mailer:
                 assert not mailer.is_enabled
 
     def test_auto_install(self):
-        """Test :func:`coloredlogs.auto_install()`."""
+        """Test :func:`colouredlogs.auto_install()`."""
         needle = random_string()
         command_line = [sys.executable, '-c', 'import logging; logging.info(%r)' % needle]
         # Sanity check that log messages aren't enabled by default.
         with CaptureOutput() as capturer:
-            os.environ['COLOREDLOGS_AUTO_INSTALL'] = 'false'
+            os.environ['COLOUREDLOGS_AUTO_INSTALL'] = 'false'
             subprocess.call(command_line)
             output = capturer.get_text()
         assert needle not in output
-        # Test that the $COLOREDLOGS_AUTO_INSTALL environment variable can be
-        # used to automatically call coloredlogs.install() during initialization.
+        # Test that the $COLOUREDLOGS_AUTO_INSTALL environment variable can be
+        # used to automatically call colouredlogs.install() during initialization.
         with CaptureOutput() as capturer:
-            os.environ['COLOREDLOGS_AUTO_INSTALL'] = 'true'
+            os.environ['COLOUREDLOGS_AUTO_INSTALL'] = 'true'
             subprocess.call(command_line)
             output = capturer.get_text()
         assert needle in output
 
     def test_cli_demo(self):
-        """Test the command line colored logging demonstration."""
+        """Test the command line coloured logging demonstration."""
         with CaptureOutput() as capturer:
-            main('coloredlogs', '--demo')
+            main('colouredlogs', '--demo')
             output = capturer.get_text()
         # Make sure the output contains all of the expected logging level names.
         for name in 'debug', 'info', 'warning', 'error', 'critical':
@@ -505,7 +505,7 @@ class ColoredLogsTestCase(TestCase):
 
     def test_cli_conversion(self):
         """Test the command line HTML conversion."""
-        output = main('coloredlogs', '--convert', 'coloredlogs', '--demo', capture=True)
+        output = main('colouredlogs', '--convert', 'colouredlogs', '--demo', capture=True)
         # Make sure the output is encoded as HTML.
         assert '<span' in output
 
@@ -513,22 +513,22 @@ class ColoredLogsTestCase(TestCase):
         """
         Test that conversion of empty output produces no HTML.
 
-        This test was added because I found that ``coloredlogs --convert`` when
+        This test was added because I found that ``colouredlogs --convert`` when
         used in a cron job could cause cron to send out what appeared to be
         empty emails. On more careful inspection the body of those emails was
         ``<code></code>``. By not emitting the wrapper element when no other
         HTML is generated, cron will not send out an email.
         """
-        output = main('coloredlogs', '--convert', 'true', capture=True)
+        output = main('colouredlogs', '--convert', 'true', capture=True)
         assert not output.strip()
 
     def test_implicit_usage_message(self):
         """Test that the usage message is shown when no actions are given."""
-        assert 'Usage:' in main('coloredlogs', capture=True)
+        assert 'Usage:' in main('colouredlogs', capture=True)
 
     def test_explicit_usage_message(self):
         """Test that the usage message is shown when ``--help`` is given."""
-        assert 'Usage:' in main('coloredlogs', '--help', capture=True)
+        assert 'Usage:' in main('colouredlogs', '--help', capture=True)
 
 
 def check_contents(filename, contents, match):
@@ -546,7 +546,7 @@ def main(*arguments, **options):
         sys.argv = arguments
         if capture:
             sys.stdout = StringIO()
-        coloredlogs.cli.main()
+        colouredlogs.cli.main()
         if capture:
             return sys.stdout.getvalue()
     finally:
@@ -561,16 +561,16 @@ def mocked_colorama_module(init_function):
     # Create a fake module shadowing colorama.
     fake_module = imp.new_module(module_name)
     setattr(fake_module, 'init', init_function)
-    # Temporarily reconfigure coloredlogs to use colorama.
-    need_colorama = coloredlogs.NEED_COLORAMA
-    coloredlogs.NEED_COLORAMA = True
+    # Temporarily reconfigure colouredlogs to use colorama.
+    need_colorama = colouredlogs.NEED_COLORAMA
+    colouredlogs.NEED_COLORAMA = True
     # Install the fake colorama module.
     saved_module = sys.modules.get(module_name, None)
     sys.modules[module_name] = fake_module
     # We've finished setting up, yield control.
     yield
     # Restore the original setting.
-    coloredlogs.NEED_COLORAMA = need_colorama
+    colouredlogs.NEED_COLORAMA = need_colorama
     # Clean up the mock module.
     if saved_module is not None:
         sys.modules[module_name] = saved_module

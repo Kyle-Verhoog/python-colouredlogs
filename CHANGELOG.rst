@@ -16,7 +16,7 @@ to `semantic versioning`_.
 
 Proper format string parsing, support for ``style='{'`` (`#11`_, `#17`_, `#52`_).
 
-Until now coloredlogs has required differently colored fields in logging format
+Until now colouredlogs has required differently coloured fields in logging format
 strings to be delimited by whitespace, leading to various issues:
 
 - Back in December 2015 issue `#11`_ was reported by someone who had expected
@@ -89,11 +89,11 @@ Enable flexible millisecond formatting using the ``%f`` directive (`#45`_).
 - Merged pull request `#47`_: Switch to ``logging.getLogRecordFactory()``. In
   the merge commit I added a small performance enhancement by checking for the
   existence of ``logging.getLogRecordFactory()`` just once, when a
-  ``ColoredFormatter`` object is instantiated.
+  ``ColouredFormatter`` object is instantiated.
 
 - Merged pull request `#52`_: Don't change whitespace in format strings. In the
   merge commit I promoted the inline function to an instance method so that it
-  can be reused by sub classes of ``ColoredFormatter``.
+  can be reused by sub classes of ``ColouredFormatter``.
 
 .. _Release 9.2: https://github.com/xolox/python-coloredlogs/compare/9.1...9.2
 .. _#47: https://github.com/xolox/python-coloredlogs/pull/47
@@ -112,10 +112,10 @@ Enable flexible millisecond formatting using the ``%f`` directive (`#45`_).
 `Release 9.0`_ (2018-01-17)
 ---------------------------
 
-Added support for background colors and 256 color mode (`#35`_).
+Added support for background colours and 256 colour mode (`#35`_).
 
 Most of the changes required for this were actually implemented in the
-humanfriendly_ package (see issue `#35`_). The changes in coloredlogs
+humanfriendly_ package (see issue `#35`_). The changes in colouredlogs
 are mostly related to the ANSI to HTML conversion.
 
 One unrelated change was made, that was to use faint green for the ``SPAM`` log
@@ -123,7 +123,7 @@ level (to distinguish it from ``DEBUG``).
 
 New features in ANSI to HTML conversion:
 
-- Support for bright and faint colors.
+- Support for bright and faint colours.
 - Support for underlined, strike-through and inverse text styles.
 
 Bug fixes in ANSI to HTML conversion:
@@ -165,7 +165,7 @@ in Python's standard library, so there's that :-).
 `Release 7.3.3`_ (2018-01-05)
 -----------------------------
 
-Bug fix for ``coloredlogs --demo`` so that it always displays the ``DEBUG`` message (`#41`_).
+Bug fix for ``colouredlogs --demo`` so that it always displays the ``DEBUG`` message (`#41`_).
 
 .. _Release 7.3.3: https://github.com/xolox/python-coloredlogs/compare/7.3.2...7.3.3
 .. _#41: https://github.com/xolox/python-coloredlogs/pull/41
@@ -235,7 +235,7 @@ Try to improve robustness during garbage collection (related to `#33`_).
 This release improves the robustness of ANSI to HTML conversion:
 
 - Don't break ANSI to HTML conversion on output encoding errors.
-- Gracefully handle unsupported colors in converter module.
+- Gracefully handle unsupported colours in converter module.
 - Make it even easier to integrate with ``cron``.
 - Improved the HTML encoding of whitespace.
 - Wrap generated HTML in ``<code>`` by default.
@@ -288,14 +288,14 @@ Enable runtime patching of ``sys.stderr`` (related to `#30`_ and `#31`_).
 
 Two backwards incompatible changes were made:
 
-- Changed log level handling in ``coloredlogs.install()``.
+- Changed log level handling in ``colouredlogs.install()``.
 - Changed the default system logging level from ``DEBUG`` to ``INFO``. To make
-  it easier to restore the old behavior, ``coloredlogs.install(syslog='debug')``
+  it easier to restore the old behavior, ``colouredlogs.install(syslog='debug')``
   is now supported.
 
 The old and problematic behavior was as follows:
 
-- ``coloredlogs.install()`` would unconditionally change the log level of the
+- ``colouredlogs.install()`` would unconditionally change the log level of the
   root logger to ``logging.NOTSET`` (changing it from the root logger's default
   level ``logging.WARNING``) and the log levels of handler(s) would control
   which log messages were actually emitted.
@@ -306,7 +306,7 @@ The old and problematic behavior was as follows:
   ``logging.WARNING`` (the default log level of the root logger).
 
 Over the years I've gotten a lot of feedback about the log level handling in
-the coloredlogs package, it was clearly the number one cause of confusion for
+the colouredlogs package, it was clearly the number one cause of confusion for
 users. Here are some examples:
 
 - https://github.com/xolox/python-coloredlogs/issues/14
@@ -325,23 +325,23 @@ whether I've succeeded.
 `Release 5.2`_ (2016-11-01)
 ---------------------------
 
-Merged pull request `#19`_: Automatically call ``coloredlogs.install()`` if
-``COLOREDLOGS_AUTO_INSTALL=true``.
+Merged pull request `#19`_: Automatically call ``colouredlogs.install()`` if
+``COLOUREDLOGS_AUTO_INSTALL=true``.
 
 While merging this pull request and writing tests for it I changed
 the implementation quite a bit from the original pull request:
 
-- The environment variable was renamed from ``COLOREDLOGS_AUTOUSE`` to
-  ``COLOREDLOGS_AUTO_INSTALL`` (in order to make it consistent with the other
+- The environment variable was renamed from ``COLOUREDLOGS_AUTOUSE`` to
+  ``COLOUREDLOGS_AUTO_INSTALL`` (in order to make it consistent with the other
   environment variables) and added to the documentation.
 
-- The ``coloredlogs.pth`` file was changed in order to reduce the amount of
+- The ``colouredlogs.pth`` file was changed in order to reduce the amount of
   code required inside the ``*.pth`` file as much as possible and create room
   to grow this feature if required, by extending ``auto_install()``. I
   seriously dislike writing out complex code in a single line, especially when
   dealing with Python code :-).
 
-- The ``coloredlogs.pth`` file has been added to ``MANIFEST.in`` to make sure
+- The ``colouredlogs.pth`` file has been added to ``MANIFEST.in`` to make sure
   that ``python setup.py sdist`` copies the ``*.pth`` file into the source
   distribution archives published to PyPI.
 
@@ -364,7 +364,7 @@ the implementation quite a bit from the original pull request:
 
 - Starting from this release wheel distributions are published to PyPI.
 - Refactored makefile and setup script (checkers, docs, wheels, twine, etc).
-- Replaced ``coloredlogs.readthedocs.org`` with ``coloredlogs.readthedocs.io`` everywhere.
+- Replaced ``colouredlogs.readthedocs.org`` with ``colouredlogs.readthedocs.io`` everywhere.
 
 .. _Release 5.1.1: https://github.com/xolox/python-coloredlogs/compare/5.1...5.1.1
 
@@ -382,7 +382,7 @@ the implementation quite a bit from the original pull request:
 `Release 5.0`_ (2015-11-14)
 ---------------------------
 
-- Remove ``ColoredStreamHandler`` and related functionality, thereby breaking backwards compatibility.
+- Remove ``ColouredStreamHandler`` and related functionality, thereby breaking backwards compatibility.
 - Remove Vim syntax script (impossible given user defined log formats :-).
 - Improve test coverage.
 
@@ -445,7 +445,7 @@ I found this issue here: https://ci.appveyor.com/project/xolox/pip-accel/build/1
 `Release 3.1.2`_ (2015-10-24)
 -----------------------------
 
-Bug fix for log format colorization (fixes `#9`_).
+Bug fix for log format colourization (fixes `#9`_).
 
 Rationale: I'm not validating the format, I just want to extract the referenced
 field names, so looking for ``%(..)`` without a trailing type specifier (and
@@ -457,14 +457,14 @@ optional modifiers) is fine here.
 `Release 3.1.1`_ (2015-10-23)
 -----------------------------
 
-Fixed broken Colorama reference in ``README.rst`` because it breaks the reStructuredText rendering on PyPI.
+Fixed broken Colourama reference in ``README.rst`` because it breaks the reStructuredText rendering on PyPI.
 
 .. _Release 3.1.1: https://github.com/xolox/python-coloredlogs/compare/3.1...3.1.1
 
 `Release 3.1`_ (2015-10-23)
 ---------------------------
 
-Depend on and use Colorama on Windows (as suggested in `#2`_). I can't actually
+Depend on and use Colourama on Windows (as suggested in `#2`_). I can't actually
 test this because I don't have access to a Windows system, but I guess some day
 someone will complain if this doesn't work as intended ;-).
 
@@ -474,23 +474,23 @@ someone will complain if this doesn't work as intended ;-).
 `Release 3.0`_ (2015-10-23)
 ---------------------------
 
-Major rewrite: Added ``ColoredFormatter``, deprecated ``ColoredStreamHandler``.
+Major rewrite: Added ``ColouredFormatter``, deprecated ``ColouredStreamHandler``.
 
 - Fixed `#2`_ by switching from ``connected_to_terminal()`` to
-  ``terminal_supports_colors()`` (the latter understands enough about Windows
+  ``terminal_supports_colours()`` (the latter understands enough about Windows
   to know it doesn't support ANSI escape sequences).
 
 - Fixed `#6`_ by adding support for user defined formats (even using a custom
   filter to enable the use of ``%(hostname)s`` :-).
 
 - Fixed `#7`_ by adding support for user defined formats and making
-  ``coloredlogs.install()`` an almost equivalent of ``logging.basicConfig()``.
+  ``colouredlogs.install()`` an almost equivalent of ``logging.basicConfig()``.
 
 This rewrite mostly resolves `pip-accel issue #59
 <https://github.com/paylogic/pip-accel/issues/59>`_. Basically all that's
 missing is a configuration option in pip-accel to make it easier to customize
 the log format, although that can now be done by setting
-``$COLOREDLOGS_LOG_FORMAT``.
+``$COLOUREDLOGS_LOG_FORMAT``.
 
 .. _Release 3.0: https://github.com/xolox/python-coloredlogs/compare/2.0...3.0
 .. _#2: https://github.com/xolox/python-coloredlogs/issues/2
@@ -500,7 +500,7 @@ the log format, although that can now be done by setting
 `Release 2.0`_ (2015-10-14)
 ---------------------------
 
-- Backwards incompatible: Change ``ansi2html`` to ``coloredlogs --convert`` (see `#8`_).
+- Backwards incompatible: Change ``ansi2html`` to ``colouredlogs --convert`` (see `#8`_).
 - Implement and enforce PEP-8 and PEP-257 compliance.
 - Change Read the Docs links to use HTTPS.
 - Move ad-hoc coverage configuration from ``Makefile`` to ``.coveragerc``.
@@ -519,7 +519,7 @@ the log format, although that can now be done by setting
 `Release 1.0`_ (2015-05-27)
 ---------------------------
 
-- Move ``coloredlogs.ansi_text()`` to ``humanfriendly.ansi_wrap()``.
+- Move ``colouredlogs.ansi_text()`` to ``humanfriendly.ansi_wrap()``.
 - Update ``setup.py`` to add trove classifiers and stop importing ``__version__``.
 - Start linking to Read the Docs as the project homepage.
 
@@ -528,10 +528,10 @@ the log format, although that can now be done by setting
 `Release 0.8`_ (2014-10-03)
 ---------------------------
 
-- Merged pull request `#5`_ which makes the severity to color mapping configurable.
+- Merged pull request `#5`_ which makes the severity to colour mapping configurable.
 - Added support for bold / faint / underline / inverse / strike through text
   styles. This extends the changes in pull request `#5`_ into a generic
-  severity ↔ color / style mapping and adds support for five text styles.
+  severity ↔ colour / style mapping and adds support for five text styles.
 - Added a coverage badge to the readme.
 
 .. _Release 0.8: https://github.com/xolox/python-coloredlogs/compare/0.7.1...0.8
@@ -565,7 +565,7 @@ Added ``decrease_verbosity()`` function (and simplify ``increase_verbosity()``).
 - Merge pull request `#4`_ adding Python 3 compatibility.
 - Start using Travis CI (so I don't accidentally drop Python 3 compatibility).
 - Document supported Python versions (2.6, 2.7 & 3.4).
-- Move demo code to separate ``coloredlogs.demo`` module.
+- Move demo code to separate ``colouredlogs.demo`` module.
 
 .. _Release 0.5: https://github.com/xolox/python-coloredlogs/compare/0.4.9...0.5
 .. _#4: https://github.com/xolox/python-coloredlogs/pull/4
@@ -601,7 +601,7 @@ Added ``increase_verbosity()`` function (just an easy shortcut).
 `Release 0.4.5`_ (2013-08-07)
 -----------------------------
 
-``ColoredStreamHandler`` now supports filtering on log level.
+``ColouredStreamHandler`` now supports filtering on log level.
 
 .. _Release 0.4.5: https://github.com/xolox/python-coloredlogs/compare/0.4.4...0.4.5
 
@@ -622,7 +622,7 @@ Change: Show the logger name by default.
 `Release 0.4.2`_ (2013-07-21)
 -----------------------------
 
-Added ``coloredlogs.install()`` function.
+Added ``colouredlogs.install()`` function.
 
 .. _Release 0.4.2: https://github.com/xolox/python-coloredlogs/compare/0.4.1...0.4.2
 
@@ -636,7 +636,7 @@ Bug fix for ``ansi2html``: Don't leave ``typescript`` files behind.
 `Release 0.4`_ (2013-07-20)
 ---------------------------
 
-Added ``ansi2html`` program to convert colored text to HTML.
+Added ``ansi2html`` program to convert coloured text to HTML.
 
 .. _Release 0.4: https://github.com/xolox/python-coloredlogs/compare/0.3.1...0.4
 
@@ -668,9 +668,9 @@ changes during merging:
 - Change text styles (seems like an improvement to me)
 - Integration with my just released verboselogs_ module.
 - Improve the readme (with screenshots).
-- Add PyPI link to ``coloredlogs.py``.
+- Add PyPI link to ``colouredlogs.py``.
 - Add URL to ``setup.py``.
-- Vim syntax mode for colored logs!
+- Vim syntax mode for coloured logs!
 
 .. _Release 0.2: https://github.com/xolox/python-coloredlogs/compare/0.1...0.2
 .. _verboselogs: https://pypi.python.org/pypi/verboselogs

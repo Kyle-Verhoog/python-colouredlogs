@@ -1,17 +1,17 @@
-# Makefile for the `coloredlogs' package.
+# Makefile for the `colouredlogs' package.
 #
 # Author: Peter Odding <peter@peterodding.com>
 # Last Change: January 14, 2018
-# URL: https://coloredlogs.readthedocs.io
+# URL: https://colouredlogs.readthedocs.io
 
 WORKON_HOME ?= $(HOME)/.virtualenvs
-VIRTUAL_ENV ?= $(WORKON_HOME)/coloredlogs
+VIRTUAL_ENV ?= $(WORKON_HOME)/colouredlogs
 PATH := $(VIRTUAL_ENV)/bin:$(PATH)
 MAKE := $(MAKE) --no-print-directory
 SHELL = bash
 
 default:
-	@echo 'Makefile for coloredlogs'
+	@echo 'Makefile for colouredlogs'
 	@echo
 	@echo 'Usage:'
 	@echo
@@ -21,7 +21,7 @@ default:
 	@echo '    make test           run the test suite, report coverage'
 	@echo '    make tox            run the tests on all Python versions'
 	@echo '    make docs           update documentation using Sphinx'
-	@echo '    make screenshots    generate screenshots of coloredlogs'
+	@echo '    make screenshots    generate screenshots of colouredlogs'
 	@echo '    make publish        publish changes to GitHub/PyPI'
 	@echo '    make clean          cleanup all temporary files'
 	@echo
@@ -31,7 +31,7 @@ install:
 	@test -x "$(VIRTUAL_ENV)/bin/python" || virtualenv --quiet "$(VIRTUAL_ENV)"
 	@test -x "$(VIRTUAL_ENV)/bin/pip" || easy_install pip
 	@pip install --quiet --requirement=requirements.txt
-	@pip uninstall --yes coloredlogs &>/dev/null || true
+	@pip uninstall --yes colouredlogs &>/dev/null || true
 	@pip install --quiet --no-deps --ignore-installed .
 
 reset:

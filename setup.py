@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
-# Setup script for the `coloredlogs' package.
+# Setup script for the `colouredlogs' package.
 #
 # Author: Peter Odding <peter@peterodding.com>
 # Last Change: April 26, 2018
-# URL: https://coloredlogs.readthedocs.io
+# URL: https://colouredlogs.readthedocs.io
 
 """
-Setup script for the `coloredlogs` package.
+Setup script for the `colouredlogs` package.
 
 **python setup.py install**
   Install from the working directory into the current Python environment.
@@ -117,22 +117,22 @@ def find_pth_directory():
             else os.path.relpath(distutils.sysconfig.get_python_lib(), sys.prefix))
 
 
-setup(name='coloredlogs',
-      version=get_version('coloredlogs', '__init__.py'),
-      description="Colored terminal output for Python's logging module",
+setup(name='colouredlogs',
+      version=get_version('colouredlogs', '__init__.py'),
+      description="Coloured terminal output for Python's logging module",
       long_description=get_contents('README.rst'),
-      url='https://coloredlogs.readthedocs.io',
+      url='https://colouredlogs.readthedocs.io',
       author="Peter Odding",
       author_email='peter@peterodding.com',
       license='MIT',
       packages=find_packages(),
       data_files=[
-          (find_pth_directory(), ['coloredlogs.pth']),
+          (find_pth_directory(), ['colouredlogs.pth']),
       ],
       entry_points=dict(console_scripts=[
-          'coloredlogs = coloredlogs.cli:main',
+          'colouredlogs = colouredlogs.cli:main',
       ]),
-      test_suite='coloredlogs.tests',
+      test_suite='colouredlogs.tests',
       install_requires=get_install_requires(),
       extras_require=get_extras_require(),
       tests_require=get_requirements('requirements-tests.txt'),

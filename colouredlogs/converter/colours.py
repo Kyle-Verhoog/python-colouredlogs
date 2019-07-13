@@ -1,12 +1,12 @@
-# Mapping of ANSI color codes to HTML/CSS colors.
+# Mapping of ANSI colour codes to HTML/CSS colours.
 #
 # Author: Peter Odding <peter@peterodding.com>
 # Last Change: January 14, 2018
-# URL: https://coloredlogs.readthedocs.io
+# URL: https://colouredlogs.readthedocs.io
 
-"""Mapping of ANSI color codes to HTML/CSS colors."""
+"""Mapping of ANSI colour codes to HTML/CSS colours."""
 
-EIGHT_COLOR_PALETTE = (
+EIGHT_COLOUR_PALETTE = (
     '#010101',  # black
     '#DE382B',  # red
     '#39B54A',  # green
@@ -17,19 +17,19 @@ EIGHT_COLOR_PALETTE = (
     '#CCC',     # white
 )
 """
-A tuple of strings mapping basic color codes to CSS colors.
+A tuple of strings mapping basic colour codes to CSS colours.
 
-The items in this tuple correspond to the eight basic color codes for black,
+The items in this tuple correspond to the eight basic colour codes for black,
 red, green, yellow, blue, magenta, cyan and white as defined in the original
-standard for ANSI escape sequences. The CSS colors are based on the `Ubuntu
-color scheme`_ described on Wikipedia and they are encoded as hexadecimal
+standard for ANSI escape sequences. The CSS colours are based on the `Ubuntu
+colour scheme`_ described on Wikipedia and they are encoded as hexadecimal
 values to get the shortest strings, which reduces the size (in bytes) of
 conversion output.
 
-.. _Ubuntu color scheme: https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
+.. _Ubuntu colour scheme: https://en.wikipedia.org/wiki/ANSI_escape_code#Colours
 """
 
-BRIGHT_COLOR_PALETTE = (
+BRIGHT_COLOUR_PALETTE = (
     '#808080',  # black
     '#F00',     # red
     '#0F0',     # green
@@ -40,12 +40,12 @@ BRIGHT_COLOR_PALETTE = (
     '#FFF',     # white
 )
 """
-A tuple of strings mapping bright color codes to CSS colors.
+A tuple of strings mapping bright colour codes to CSS colours.
 
-This tuple maps the bright color variants of :data:`EIGHT_COLOR_PALETTE`.
+This tuple maps the bright colour variants of :data:`EIGHT_COLOUR_PALETTE`.
 """
 
-EXTENDED_COLOR_PALETTE = (
+EXTENDED_COLOUR_PALETTE = (
     '#000000',
     '#800000',
     '#008000',
@@ -304,7 +304,7 @@ EXTENDED_COLOR_PALETTE = (
     '#EEEEEE',
 )
 """
-A tuple of strings mapping 256 color mode color codes to CSS colors.
+A tuple of strings mapping 256 colour mode colour codes to CSS colours.
 
-The items in this tuple correspond to the color codes in the 256 color mode palette.
+The items in this tuple correspond to the colour codes in the 256 colour mode palette.
 """

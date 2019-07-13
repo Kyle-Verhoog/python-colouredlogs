@@ -1,6 +1,6 @@
 [run]
-source = coloredlogs
-omit = coloredlogs/tests.py
+source = colouredlogs
+omit = colouredlogs/tests.py
 
 [report]
 exclude_lines = assert False

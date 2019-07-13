@@ -1,11 +1,11 @@
-# Colored terminal output for Python's logging module.
+# Coloured terminal output for Python's logging module.
 #
 # Author: Peter Odding <peter@peterodding.com>
 # Last Change: May 13, 2018
-# URL: https://coloredlogs.readthedocs.io
+# URL: https://colouredlogs.readthedocs.io
 
 """
-Colored terminal output for Python's :mod:`logging` module.
+Coloured terminal output for Python's :mod:`logging` module.
 
 .. contents::
    :local:
@@ -13,43 +13,43 @@ Colored terminal output for Python's :mod:`logging` module.
 Getting started
 ===============
 
-The easiest way to get started is by importing :mod:`coloredlogs` and calling
-:mod:`coloredlogs.install()` (similar to :func:`logging.basicConfig()`):
+The easiest way to get started is by importing :mod:`colouredlogs` and calling
+:mod:`colouredlogs.install()` (similar to :func:`logging.basicConfig()`):
 
- >>> import coloredlogs, logging
- >>> coloredlogs.install(level='DEBUG')
+ >>> import colouredlogs, logging
+ >>> colouredlogs.install(level='DEBUG')
  >>> logger = logging.getLogger('some.module.name')
  >>> logger.info("this is an informational message")
  2015-10-22 19:13:52 peter-macbook some.module.name[28036] INFO this is an informational message
 
-The :mod:`~coloredlogs.install()` function creates a :class:`ColoredFormatter`
+The :mod:`~colouredlogs.install()` function creates a :class:`ColouredFormatter`
 that injects `ANSI escape sequences`_ into the log output.
 
-.. _ANSI escape sequences: https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
+.. _ANSI escape sequences: https://en.wikipedia.org/wiki/ANSI_escape_code#Colours
 
 Environment variables
 =====================
 
 The following environment variables can be used to configure the
-:mod:`coloredlogs` module without writing any code:
+:mod:`colouredlogs` module without writing any code:
 
 =============================  ============================  ==================================
 Environment variable           Default value                 Type of value
 =============================  ============================  ==================================
-``$COLOREDLOGS_AUTO_INSTALL``  'false'                       a boolean that controls whether
+``$COLOUREDLOGS_AUTO_INSTALL``  'false'                       a boolean that controls whether
                                                              :func:`auto_install()` is called
-``$COLOREDLOGS_LOG_LEVEL``     'INFO'                        a log level name
-``$COLOREDLOGS_LOG_FORMAT``    :data:`DEFAULT_LOG_FORMAT`    a log format string
-``$COLOREDLOGS_DATE_FORMAT``   :data:`DEFAULT_DATE_FORMAT`   a date/time format string
-``$COLOREDLOGS_LEVEL_STYLES``  :data:`DEFAULT_LEVEL_STYLES`  see :func:`parse_encoded_styles()`
-``$COLOREDLOGS_FIELD_STYLES``  :data:`DEFAULT_FIELD_STYLES`  see :func:`parse_encoded_styles()`
+``$COLOUREDLOGS_LOG_LEVEL``     'INFO'                        a log level name
+``$COLOUREDLOGS_LOG_FORMAT``    :data:`DEFAULT_LOG_FORMAT`    a log format string
+``$COLOUREDLOGS_DATE_FORMAT``   :data:`DEFAULT_DATE_FORMAT`   a date/time format string
+``$COLOUREDLOGS_LEVEL_STYLES``  :data:`DEFAULT_LEVEL_STYLES`  see :func:`parse_encoded_styles()`
+``$COLOUREDLOGS_FIELD_STYLES``  :data:`DEFAULT_FIELD_STYLES`  see :func:`parse_encoded_styles()`
 =============================  ============================  ==================================
 
 Examples of customization
 =========================
 
 Here we'll take a look at some examples of how you can customize
-:mod:`coloredlogs` using environment variables.
+:mod:`colouredlogs` using environment variables.
 
 .. contents::
    :local:
@@ -62,24 +62,24 @@ screen shots of the following customizations (this is the same screen shot that
 is shown in the introduction):
 
 .. image:: images/defaults.png
-   :alt: Screen shot of colored logging with defaults.
+   :alt: Screen shot of coloured logging with defaults.
 
 The screen shot above was taken from ``urxvt`` which doesn't support faint text
-colors, otherwise the color of green used for `debug` messages would have
-differed slightly from the color of green used for `spam` messages.
+colours, otherwise the colour of green used for `debug` messages would have
+differed slightly from the colour of green used for `spam` messages.
 
 Apart from the `faint` style of the `spam` level, the default configuration of
-`coloredlogs` sticks to the eight color palette defined by the original ANSI
+`colouredlogs` sticks to the eight colour palette defined by the original ANSI
 standard, in order to provide a somewhat consistent experience across terminals
 and terminal emulators.
 
-Available text styles and colors
+Available text styles and colours
 --------------------------------
 
 Of course you are free to customize the default configuration, in this case you
-can use any text style or color that you know is supported by your terminal.
+can use any text style or colour that you know is supported by your terminal.
 You can use the ``humanfriendly --demo`` command to try out the supported text
-styles and colors:
+styles and colours:
 
 .. image:: http://humanfriendly.readthedocs.io/en/latest/_images/ansi-demo.png
    :alt: Screen shot of the 'humanfriendly --demo' command.
@@ -96,7 +96,7 @@ Here's what that looks like in a terminal (I always work in terminals with a
 black background and white text):
 
 .. image:: images/custom-log-format.png
-   :alt: Screen shot of colored logging with custom log format.
+   :alt: Screen shot of coloured logging with custom log format.
 
 Changing the date/time format
 -----------------------------
@@ -110,41 +110,41 @@ part and leave only the time:
 Here's what it looks like in a terminal:
 
 .. image:: images/custom-datetime-format.png
-   :alt: Screen shot of colored logging with custom date/time format.
+   :alt: Screen shot of coloured logging with custom date/time format.
 
-Changing the colors/styles
+Changing the colours/styles
 --------------------------
 
-Finally you can customize the colors and text styles that are used:
+Finally you can customize the colours and text styles that are used:
 
-.. literalinclude:: examples/custom-colors.txt
+.. literalinclude:: examples/custom-colours.txt
    :language: sh
 
 Here's an explanation of the features used here:
 
-- The numbers used in ``$COLOREDLOGS_LEVEL_STYLES`` demonstrate the use of 256
-  color mode (the numbers refer to the 256 color mode palette which is fixed).
+- The numbers used in ``$COLOUREDLOGS_LEVEL_STYLES`` demonstrate the use of 256
+  colour mode (the numbers refer to the 256 colour mode palette which is fixed).
 
 - The `success` level demonstrates the use of a text style (bold).
 
-- The `critical` level demonstrates the use of a background color (red).
+- The `critical` level demonstrates the use of a background colour (red).
 
 Of course none of this can be seen in the shell transcript quoted above, but
 take a look at the following screen shot:
 
-.. image:: images/custom-colors.png
-   :alt: Screen shot of colored logging with custom colors.
+.. image:: images/custom-colours.png
+   :alt: Screen shot of coloured logging with custom colours.
 
 .. _notes about log levels:
 
 Some notes about log levels
 ===========================
 
-With regards to the handling of log levels, the :mod:`coloredlogs` package
+With regards to the handling of log levels, the :mod:`colouredlogs` package
 differs from Python's :mod:`logging` module in two aspects:
 
 1. While the :mod:`logging` module uses the default logging level
-   :data:`logging.WARNING`, the :mod:`coloredlogs` package has always used
+   :data:`logging.WARNING`, the :mod:`colouredlogs` package has always used
    :data:`logging.INFO` as its default log level.
 
 2. When logging to the terminal or system log is initialized by
@@ -216,13 +216,13 @@ NEED_COLORAMA = WINDOWS
 __version__ = '10.0'
 
 DEFAULT_LOG_LEVEL = logging.INFO
-"""The default log level for :mod:`coloredlogs` (:data:`logging.INFO`)."""
+"""The default log level for :mod:`colouredlogs` (:data:`logging.INFO`)."""
 
 DEFAULT_LOG_FORMAT = '%(asctime)s %(hostname)s %(name)s[%(process)d] %(levelname)s %(message)s'
-"""The default log format for :class:`ColoredFormatter` objects (a string)."""
+"""The default log format for :class:`ColouredFormatter` objects (a string)."""
 
 DEFAULT_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
-"""The default date/time format for :class:`ColoredFormatter` objects (a string)."""
+"""The default date/time format for :class:`ColouredFormatter` objects (a string)."""
 
 CHROOT_FILES = ['/etc/debian_chroot']
 """A list of filenames that indicate a chroot and contain the name of the chroot."""
@@ -237,23 +237,23 @@ instead it's printed to the terminal without any translation.
 """
 
 DEFAULT_FIELD_STYLES = dict(
-    asctime=dict(color='green'),
-    hostname=dict(color='magenta'),
-    levelname=dict(color='black', bold=CAN_USE_BOLD_FONT),
-    programname=dict(color='cyan'),
-    name=dict(color='blue'))
+    asctime=dict(colour='green'),
+    hostname=dict(colour='magenta'),
+    levelname=dict(colour='black', bold=CAN_USE_BOLD_FONT),
+    programname=dict(colour='cyan'),
+    name=dict(colour='blue'))
 """Mapping of log format names to default font styles."""
 
 DEFAULT_LEVEL_STYLES = dict(
-    spam=dict(color='green', faint=True),
-    debug=dict(color='green'),
-    verbose=dict(color='blue'),
+    spam=dict(colour='green', faint=True),
+    debug=dict(colour='green'),
+    verbose=dict(colour='blue'),
     info=dict(),
-    notice=dict(color='magenta'),
-    warning=dict(color='yellow'),
-    success=dict(color='green', bold=CAN_USE_BOLD_FONT),
-    error=dict(color='red'),
-    critical=dict(color='red', bold=CAN_USE_BOLD_FONT))
+    notice=dict(colour='magenta'),
+    warning=dict(colour='yellow'),
+    success=dict(colour='green', bold=CAN_USE_BOLD_FONT),
+    error=dict(colour='red'),
+    critical=dict(colour='red', bold=CAN_USE_BOLD_FONT))
 """Mapping of log level names to default font styles."""
 
 DEFAULT_FORMAT_STYLE = '%'
@@ -299,25 +299,25 @@ and manipulate logging format strings.
 
 def auto_install():
     """
-    Automatically call :func:`install()` when ``$COLOREDLOGS_AUTO_INSTALL`` is set.
+    Automatically call :func:`install()` when ``$COLOUREDLOGS_AUTO_INSTALL`` is set.
 
-    The `coloredlogs` package includes a `path configuration file`_ that
-    automatically imports the :mod:`coloredlogs` module and calls
+    The `colouredlogs` package includes a `path configuration file`_ that
+    automatically imports the :mod:`colouredlogs` module and calls
     :func:`auto_install()` when the environment variable
-    ``$COLOREDLOGS_AUTO_INSTALL`` is set.
+    ``$COLOUREDLOGS_AUTO_INSTALL`` is set.
 
     This function uses :func:`~humanfriendly.coerce_boolean()` to check whether
-    the value of ``$COLOREDLOGS_AUTO_INSTALL`` should be considered :data:`True`.
+    the value of ``$COLOUREDLOGS_AUTO_INSTALL`` should be considered :data:`True`.
 
     .. _path configuration file: https://docs.python.org/2/library/site.html#module-site
     """
-    if coerce_boolean(os.environ.get('COLOREDLOGS_AUTO_INSTALL', 'false')):
+    if coerce_boolean(os.environ.get('COLOUREDLOGS_AUTO_INSTALL', 'false')):
         install()
 
 
 def install(level=None, **kw):
     """
-    Enable colored terminal output for Python's :mod:`logging` module.
+    Enable coloured terminal output for Python's :mod:`logging` module.
 
     :param level: The default logging level (an integer or a string with a
                   level name, defaults to :data:`DEFAULT_LOG_LEVEL`).
@@ -342,12 +342,12 @@ def install(level=None, **kw):
     :param stream: The stream where log messages should be written to (a
                    file-like object). This defaults to :data:`None` which
                    means :class:`StandardErrorHandler` is used.
-    :param isatty: :data:`True` to use a :class:`ColoredFormatter`,
+    :param isatty: :data:`True` to use a :class:`ColouredFormatter`,
                    :data:`False` to use a normal :class:`~logging.Formatter`
                    (defaults to auto-detection using
                    :func:`~humanfriendly.terminal.terminal_supports_colors()`).
     :param reconfigure: If :data:`True` (the default) multiple calls to
-                        :func:`coloredlogs.install()` will each override
+                        :func:`colouredlogs.install()` will each override
                         the previous configuration.
     :param use_chroot: Refer to :class:`HostNameFilter`.
     :param programname: Refer to :class:`ProgramNameFilter`.
@@ -357,7 +357,7 @@ def install(level=None, **kw):
                    case it is assumed to be a logging level which is passed on
                    to :func:`.enable_system_logging()`.
 
-    The :func:`coloredlogs.install()` function is similar to
+    The :func:`colouredlogs.install()` function is similar to
     :func:`logging.basicConfig()`, both functions take a lot of optional
     keyword arguments but try to do the right thing by default:
 
@@ -365,7 +365,7 @@ def install(level=None, **kw):
        :class:`~logging.StreamHandler` is found that is connected to either
        :data:`~sys.stdout` or :data:`~sys.stderr` the handler will be removed.
        This means that first calling :func:`logging.basicConfig()` and then
-       calling :func:`coloredlogs.install()` will replace the stream handler
+       calling :func:`colouredlogs.install()` will replace the stream handler
        instead of adding a duplicate stream handler. If `reconfigure` is
        :data:`False` and an existing handler is found no further steps are
        taken (to avoid installing a duplicate stream handler).
@@ -375,7 +375,7 @@ def install(level=None, **kw):
        default). The stream handler's level is set to the value of the `level`
        keyword argument.
 
-    3. A :class:`ColoredFormatter` is created if the `isatty` keyword argument
+    3. A :class:`ColouredFormatter` is created if the `isatty` keyword argument
        allows it (or auto-detection allows it), otherwise a normal
        :class:`~logging.Formatter` is created. The formatter is initialized
        with the `fmt` and `datefmt` keyword arguments (or their computed
@@ -399,10 +399,10 @@ def install(level=None, **kw):
     # Get the log level from an argument, environment variable or default and
     # convert the names of log levels to numbers to enable numeric comparison.
     if level is None:
-        level = os.environ.get('COLOREDLOGS_LOG_LEVEL', DEFAULT_LOG_LEVEL)
+        level = os.environ.get('COLOUREDLOGS_LOG_LEVEL', DEFAULT_LOG_LEVEL)
     level = level_to_number(level)
     # Remove any existing stream handler that writes to stdout or stderr, even
-    # if the stream handler wasn't created by coloredlogs because multiple
+    # if the stream handler wasn't created by colouredlogs because multiple
     # stream handlers (in the same hierarchy) writing to stdout or stderr would
     # create duplicate output.  `None' is a synonym for the possibly dynamic
     # value of the stderr attribute of the sys module.
@@ -421,35 +421,35 @@ def install(level=None, **kw):
         #
         # We never enable system logging on Windows because it is my impression
         # that SysLogHandler isn't intended to be used on Windows; I've had
-        # reports of coloredlogs spewing extremely verbose errno 10057 warning
+        # reports of colouredlogs spewing extremely verbose errno 10057 warning
         # messages to the console (once for each log message I suppose).
         if syslog_enabled not in (None, False) and not WINDOWS:
-            from coloredlogs.syslog import enable_system_logging
+            from colouredlogs.syslog import enable_system_logging
             if syslog_enabled is True:
                 # If the caller passed syslog=True then we leave the choice of
-                # default log level up to the coloredlogs.syslog module.
+                # default log level up to the colouredlogs.syslog module.
                 enable_system_logging()
             else:
                 # Values other than (None, True, False) are assumed to
                 # represent a logging level for system logging.
                 enable_system_logging(level=syslog_enabled)
         # Figure out whether we can use ANSI escape sequences.
-        use_colors = kw.get('isatty', None)
-        if use_colors or use_colors is None:
+        use_colours = kw.get('isatty', None)
+        if use_colours or use_colours is None:
             if NEED_COLORAMA:
                 try:
                     # On Windows we can only use ANSI escape
                     # sequences if Colorama is available.
                     import colorama
                     colorama.init()
-                    use_colors = True
+                    use_colours = True
                 except ImportError:
                     # If Colorama isn't available then we specifically
                     # shouldn't emit ANSI escape sequences!
-                    use_colors = False
-            elif use_colors is None:
+                    use_colours = False
+            elif use_colours is None:
                 # Auto-detect terminal support on other platforms.
-                use_colors = terminal_supports_colors(stream)
+                use_colours = terminal_supports_colors(stream)
         # Create a stream handler.
         handler = logging.StreamHandler(stream) if stream else StandardErrorHandler()
         handler.setLevel(level)
@@ -464,19 +464,19 @@ def install(level=None, **kw):
         # Come up with a default log format?
         if not formatter_options['fmt']:
             # Use the log format defined by the environment variable
-            # $COLOREDLOGS_LOG_FORMAT or fall back to the default.
-            formatter_options['fmt'] = os.environ.get('COLOREDLOGS_LOG_FORMAT') or DEFAULT_LOG_FORMAT
+            # $COLOUREDLOGS_LOG_FORMAT or fall back to the default.
+            formatter_options['fmt'] = os.environ.get('COLOUREDLOGS_LOG_FORMAT') or DEFAULT_LOG_FORMAT
         # If the caller didn't specify a date/time format we'll use the format
-        # defined by the environment variable $COLOREDLOGS_DATE_FORMAT (or fall
+        # defined by the environment variable $COLOUREDLOGS_DATE_FORMAT (or fall
         # back to the default).
         if not formatter_options['datefmt']:
-            formatter_options['datefmt'] = os.environ.get('COLOREDLOGS_DATE_FORMAT') or DEFAULT_DATE_FORMAT
+            formatter_options['datefmt'] = os.environ.get('COLOUREDLOGS_DATE_FORMAT') or DEFAULT_DATE_FORMAT
         # Python's logging module shows milliseconds by default through special
         # handling in the logging.Formatter.formatTime() method [1]. Because
-        # coloredlogs always defines a `datefmt' it bypasses this special
-        # handling, which is fine because ever since publishing coloredlogs
+        # colouredlogs always defines a `datefmt' it bypasses this special
+        # handling, which is fine because ever since publishing colouredlogs
         # I've never needed millisecond precision ;-). However there are users
-        # of coloredlogs that do want milliseconds to be shown [2] so we
+        # of colouredlogs that do want milliseconds to be shown [2] so we
         # provide a shortcut to make it easy.
         #
         # [1] https://stackoverflow.com/questions/6290739/python-logging-use-milliseconds-in-time-format
@@ -505,10 +505,10 @@ def install(level=None, **kw):
             programname=kw.get('programname'),
             style=style,
         )
-        # Inject additional formatter arguments specific to ColoredFormatter?
-        if use_colors:
-            for name, environment_name in (('field_styles', 'COLOREDLOGS_FIELD_STYLES'),
-                                           ('level_styles', 'COLOREDLOGS_LEVEL_STYLES')):
+        # Inject additional formatter arguments specific to ColouredFormatter?
+        if use_colours:
+            for name, environment_name in (('field_styles', 'COLOUREDLOGS_FIELD_STYLES'),
+                                           ('level_styles', 'COLOUREDLOGS_LEVEL_STYLES')):
                 value = kw.get(name)
                 if value is None:
                     # If no styles have been specified we'll fall back
@@ -518,8 +518,8 @@ def install(level=None, **kw):
                         value = parse_encoded_styles(environment_value)
                 if value is not None:
                     formatter_options[name] = value
-        # Create a (possibly colored) formatter.
-        formatter_type = ColoredFormatter if use_colors else BasicFormatter
+        # Create a (possibly coloured) formatter.
+        formatter_type = ColouredFormatter if use_colours else BasicFormatter
         handler.setFormatter(formatter_type(**formatter_options))
         # Adjust the level of the selected logger.
         adjust_level(logger, level)
@@ -678,7 +678,7 @@ def level_to_number(value):
 
     This function translates log level names into their numeric values. The
     :mod:`logging` module does this for us on Python 2.7 and 3.4 but fails to
-    do so on Python 2.6 which :mod:`coloredlogs` still supports.
+    do so on Python 2.6 which :mod:`colouredlogs` still supports.
     """
     if is_string(value):
         try:
@@ -703,7 +703,7 @@ def find_level_aliases():
     Here's what the result looks like by default (when
     no custom levels or level names have been defined):
 
-    >>> from coloredlogs import find_level_aliases
+    >>> from colouredlogs import find_level_aliases
     >>> find_level_aliases()
     {'WARN': 'WARNING', 'FATAL': 'CRITICAL'}
     """
@@ -730,32 +730,32 @@ def parse_encoded_styles(text, normalize_key=None):
 
     Here's an example of how this function works:
 
-    >>> from coloredlogs import parse_encoded_styles
+    >>> from colouredlogs import parse_encoded_styles
     >>> from pprint import pprint
     >>> encoded_styles = 'debug=green;warning=yellow;error=red;critical=red,bold'
     >>> pprint(parse_encoded_styles(encoded_styles))
-    {'debug': {'color': 'green'},
-     'warning': {'color': 'yellow'},
-     'error': {'color': 'red'},
-     'critical': {'bold': True, 'color': 'red'}}
+    {'debug': {'colour': 'green'},
+     'warning': {'colour': 'yellow'},
+     'error': {'colour': 'red'},
+     'critical': {'bold': True, 'colour': 'red'}}
     """
     parsed_styles = {}
     for assignment in split(text, ';'):
         name, _, styles = assignment.partition('=')
         target = parsed_styles.setdefault(name, {})
         for token in split(styles, ','):
-            # When this code was originally written, setting background colors
+            # When this code was originally written, setting background colours
             # wasn't supported yet, so there was no need to disambiguate
-            # between the text color and background color. This explains why
-            # a color name or number implies setting the text color (for
+            # between the text colour and background colour. This explains why
+            # a colour name or number implies setting the text colour (for
             # backwards compatibility).
             if token.isdigit():
-                target['color'] = int(token)
+                target['colour'] = int(token)
             elif token in ANSI_COLOR_CODES:
-                target['color'] = token
+                target['colour'] = token
             elif '=' in token:
                 name, _, value = token.partition('=')
-                if name in ('color', 'background'):
+                if name in ('colour', 'background'):
                     if value.isdigit():
                         target[name] = int(value)
                     elif value in ANSI_COLOR_CODES:
@@ -824,7 +824,7 @@ def replace_handler(logger, match_handler, reconfigure):
     """
     handler, other_logger = find_handler(logger, match_handler)
     if handler and other_logger and reconfigure:
-        # Remove the existing handler from the logger that its attached to
+        # Remove the existing handler from the logger that it's attached to
         # so that we can install a new handler that behaves differently.
         other_logger.removeHandler(handler)
         # Switch to the logger that the existing handler was attached to so
@@ -855,7 +855,7 @@ def find_handler(logger, match_handler):
     handlers attached to a logger, however it won't raise an exception if the
     attribute isn't available. The advantages of this approach are:
 
-    - This works regardless of whether :mod:`coloredlogs` attached the handler
+    - This works regardless of whether :mod:`colouredlogs` attached the handler
       or other Python code attached the handler.
 
     - This will correctly recognize the situation where the given logger has no
@@ -949,22 +949,22 @@ class BasicFormatter(logging.Formatter):
         return logging.Formatter.formatTime(self, record, datefmt)
 
 
-class ColoredFormatter(BasicFormatter):
+class ColouredFormatter(BasicFormatter):
 
     """
-    Log :class:`~logging.Formatter` that uses `ANSI escape sequences`_ to create colored logs.
+    Log :class:`~logging.Formatter` that uses `ANSI escape sequences`_ to create coloured logs.
 
-    :class:`ColoredFormatter` inherits from :class:`BasicFormatter` to enable
+    :class:`ColouredFormatter` inherits from :class:`BasicFormatter` to enable
     the use of ``%f`` for millisecond formatting in date/time strings.
 
-    .. note:: If you want to use :class:`ColoredFormatter` on Windows then you
+    .. note:: If you want to use :class:`ColouredFormatter` on Windows then you
               may need to call :func:`colorama.init()`. This is done for you
-              when you call :func:`coloredlogs.install()`.
+              when you call :func:`colouredlogs.install()`.
     """
 
     def __init__(self, fmt=None, datefmt=None, level_styles=None, field_styles=None, style=DEFAULT_FORMAT_STYLE):
         """
-        Initialize a :class:`ColoredFormatter` object.
+        Initialize a :class:`ColouredFormatter` object.
 
         :param fmt: A log format string (defaults to :data:`DEFAULT_LOG_FORMAT`).
         :param datefmt: A date/time format string (defaults to :data:`None`,
@@ -978,7 +978,7 @@ class ColoredFormatter(BasicFormatter):
                              (defaults to :data:`DEFAULT_FIELD_STYLES`).
         :raises: Refer to :func:`check_style()`.
 
-        This initializer uses :func:`colorize_format()` to inject ANSI escape
+        This initializer uses :func:`colourize_format()` to inject ANSI escape
         sequences in the log format string before it is passed to the
         initializer of the base class.
         """
@@ -994,7 +994,7 @@ class ColoredFormatter(BasicFormatter):
         self.level_styles = self.nn.normalize_keys(DEFAULT_LEVEL_STYLES if level_styles is None else level_styles)
         self.field_styles = self.nn.normalize_keys(DEFAULT_FIELD_STYLES if field_styles is None else field_styles)
         # Rewrite the format string to inject ANSI escape sequences.
-        kw = dict(fmt=self.colorize_format(fmt, style), datefmt=datefmt)
+        kw = dict(fmt=self.colourize_format(fmt, style), datefmt=datefmt)
         # If we were given a non-default logging format style we pass it on
         # to our superclass. At this point check_style() will have already
         # complained that the use of alternative logging format styles
@@ -1004,7 +1004,7 @@ class ColoredFormatter(BasicFormatter):
         # Initialize the superclass with the rewritten format string.
         logging.Formatter.__init__(self, **kw)
 
-    def colorize_format(self, fmt, style=DEFAULT_FORMAT_STYLE):
+    def colourize_format(self, fmt, style=DEFAULT_FORMAT_STYLE):
         """
         Rewrite a logging format string to inject ANSI escape sequences.
 
@@ -1048,7 +1048,7 @@ class ColoredFormatter(BasicFormatter):
                 # If exactly one (1) field style is available for the group of
                 # tokens then all of the tokens will be styled the same way.
                 # This provides a limited form of backwards compatibility with
-                # the (intended) behavior of coloredlogs before the release of
+                # the (intended) behavior of colouredlogs before the release of
                 # version 10.
                 result.append(ansi_wrap(
                     ''.join(token.text for token in group),
@@ -1141,9 +1141,9 @@ class HostNameFilter(logging.Filter):
 
     You can install this log filter as follows::
 
-     >>> import coloredlogs, logging
+     >>> import colouredlogs, logging
      >>> handler = logging.StreamHandler()
-     >>> handler.addFilter(coloredlogs.HostNameFilter())
+     >>> handler.addFilter(colouredlogs.HostNameFilter())
      >>> handler.setFormatter(logging.Formatter('[%(hostname)s] %(message)s'))
      >>> logger = logging.getLogger()
      >>> logger.addHandler(handler)
@@ -1151,7 +1151,7 @@ class HostNameFilter(logging.Filter):
      >>> logger.info("Does it work?")
      [peter-macbook] Does it work?
 
-    Of course :func:`coloredlogs.install()` does all of this for you :-).
+    Of course :func:`colouredlogs.install()` does all of this for you :-).
     """
 
     @classmethod
@@ -1254,7 +1254,7 @@ class StandardErrorHandler(logging.StreamHandler):
     sys.stderr <https://github.com/xolox/python-coloredlogs/pull/31>`_. It's
     basically the same as the ``logging._StderrHandler`` class present in
     Python 3 but it will available regardless of Python version. This handler
-    is used by :func:`coloredlogs.install()` to improve compatibility with the
+    is used by :func:`colouredlogs.install()` to improve compatibility with the
     Python standard library.
     """
 
@@ -1413,7 +1413,7 @@ class NameNormalizer(object):
         Transforms all strings to lowercase and resolves level name aliases
         (refer to :func:`find_level_aliases()`) to their canonical name:
 
-        >>> from coloredlogs import NameNormalizer
+        >>> from colouredlogs import NameNormalizer
         >>> from humanfriendly import format_table
         >>> nn = NameNormalizer()
         >>> sample_names = ['DEBUG', 'INFO', 'WARN', 'WARNING', 'ERROR', 'FATAL', 'CRITICAL']

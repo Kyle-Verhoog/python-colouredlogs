@@ -2,14 +2,14 @@
 #
 # Author: Peter Odding <peter@peterodding.com>
 # Last Change: April 17, 2017
-# URL: https://coloredlogs.readthedocs.io
+# URL: https://colouredlogs.readthedocs.io
 
 """
 Easy to use UNIX system logging for Python's :mod:`logging` module.
 
-Admittedly system logging has little to do with colored terminal output, however:
+Admittedly system logging has little to do with coloured terminal output, however:
 
-- The `coloredlogs` package is my attempt to do Python logging right and system
+- The `colouredlogs` package is my attempt to do Python logging right and system
   logging is an important part of that equation.
 
 - I've seen a surprising number of quirks and mistakes in system logging done
@@ -18,7 +18,7 @@ Admittedly system logging has little to do with colored terminal output, however
   up with duplicate timestamps that make the logs awful to read :-).
 
 - The ``%(programname)s`` filter originated in my system logging code and I
-  wanted it in `coloredlogs` so the step to include this module wasn't that big.
+  wanted it in `colouredlogs` so the step to include this module wasn't that big.
 
 - As a bonus this Python module now has a test suite and proper documentation.
 
@@ -33,7 +33,7 @@ import socket
 import sys
 
 # Modules included in our package.
-from coloredlogs import (
+from colouredlogs import (
     DEFAULT_LOG_LEVEL,
     ProgramNameFilter,
     adjust_level,
@@ -52,7 +52,7 @@ DEFAULT_LOG_FORMAT = '%(programname)s[%(process)d]: %(levelname)s %(message)s'
 """
 The default format for log messages sent to the system log (a string).
 
-The ``%(programname)s`` format requires :class:`~coloredlogs.ProgramNameFilter`
+The ``%(programname)s`` format requires :class:`~colouredlogs.ProgramNameFilter`
 but :func:`enable_system_logging()` takes care of this for you.
 
 The ``name[pid]:`` construct (specifically the colon) in the format allows
@@ -108,14 +108,14 @@ def enable_system_logging(programname=None, fmt=None, logger=None, reconfigure=T
     Redirect :mod:`logging` messages to the system log (e.g. ``/var/log/syslog``).
 
     :param programname: The program name to embed in log messages (a string, defaults
-                         to the result of :func:`~coloredlogs.find_program_name()`).
+                         to the result of :func:`~colouredlogs.find_program_name()`).
     :param fmt: The log format for system log messages (a string, defaults to
                 :data:`DEFAULT_LOG_FORMAT`).
     :param logger: The logger to which the :class:`~logging.handlers.SysLogHandler`
                    should be connected (defaults to the root logger).
     :param level: The logging level for the :class:`~logging.handlers.SysLogHandler`
                   (defaults to :data:`.DEFAULT_LOG_LEVEL`). This value is coerced
-                  using :func:`~coloredlogs.level_to_number()`.
+                  using :func:`~colouredlogs.level_to_number()`.
     :param reconfigure: If :data:`True` (the default) multiple calls to
                         :func:`enable_system_logging()` will each override
                         the previous configuration.
@@ -163,7 +163,7 @@ def connect_to_syslog(address=None, facility=None, level=None):
                      Defaults to ``LOG_USER``.
     :param level: The logging level for the :class:`~logging.handlers.SysLogHandler`
                   (defaults to :data:`.DEFAULT_LOG_LEVEL`). This value is coerced
-                  using :func:`~coloredlogs.level_to_number()`.
+                  using :func:`~colouredlogs.level_to_number()`.
     :returns: A :class:`~logging.handlers.SysLogHandler` object or :data:`None` (if the
               system logging daemon is unavailable).
 

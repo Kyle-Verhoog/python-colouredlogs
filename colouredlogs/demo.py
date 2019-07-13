@@ -1,17 +1,17 @@
-# Demonstration of the coloredlogs package.
+# Demonstration of the colouredlogs package.
 #
 # Author: Peter Odding <peter@peterodding.com>
 # Last Change: January 14, 2018
-# URL: https://coloredlogs.readthedocs.io
+# URL: https://colouredlogs.readthedocs.io
 
-"""A simple demonstration of the `coloredlogs` package."""
+"""A simple demonstration of the `colouredlogs` package."""
 
 # Standard library modules.
 import os
 import time
 
 # Modules included in our package.
-import coloredlogs
+import colouredlogs
 
 # If my verbose logger is installed, we'll use that for the demo.
 try:
@@ -22,25 +22,25 @@ except ImportError:
 # Initialize a logger for this module.
 logger = getLogger(__name__)
 
-DEMO_DELAY = float(os.environ.get('COLOREDLOGS_DEMO_DELAY', '1'))
-"""The number of seconds between each message emitted by :func:`demonstrate_colored_logging()`."""
+DEMO_DELAY = float(os.environ.get('COLOUREDLOGS_DEMO_DELAY', '1'))
+"""The number of seconds between each message emitted by :func:`demonstrate_coloured_logging()`."""
 
 
-def demonstrate_colored_logging():
-    """Interactively demonstrate the :mod:`coloredlogs` package."""
+def demonstrate_coloured_logging():
+    """Interactively demonstrate the :mod:`colouredlogs` package."""
     # Determine the available logging levels and order them by numeric value.
     decorated_levels = []
-    defined_levels = coloredlogs.find_defined_levels()
-    normalizer = coloredlogs.NameNormalizer()
+    defined_levels = colouredlogs.find_defined_levels()
+    normalizer = colouredlogs.NameNormalizer()
     for name, level in defined_levels.items():
         if name != 'NOTSET':
             item = (level, normalizer.normalize_name(name))
             if item not in decorated_levels:
                 decorated_levels.append(item)
     ordered_levels = sorted(decorated_levels)
-    # Initialize colored output to the terminal, default to the most
+    # Initialize coloured output to the terminal, default to the most
     # verbose logging level but enable the user the customize it.
-    coloredlogs.install(level=os.environ.get('COLOREDLOGS_LOG_LEVEL', ordered_levels[0][1]))
+    colouredlogs.install(level=os.environ.get('COLOUREDLOGS_LOG_LEVEL', ordered_levels[0][1]))
     # Print some examples with different timestamps.
     for level, name in ordered_levels:
         log_method = getattr(logger, name, None)

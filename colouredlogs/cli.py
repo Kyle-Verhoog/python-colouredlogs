@@ -1,13 +1,13 @@
-# Command line interface for the coloredlogs package.
+# Command line interface for the colouredlogs package.
 #
 # Author: Peter Odding <peter@peterodding.com>
 # Last Change: December 15, 2017
-# URL: https://coloredlogs.readthedocs.io
+# URL: https://colouredlogs.readthedocs.io
 
 """
-Usage: coloredlogs [OPTIONS] [ARGS]
+Usage: colouredlogs [OPTIONS] [ARGS]
 
-The coloredlogs program provides a simple command line interface for the Python
+The colouredlogs program provides a simple command line interface for the Python
 package by the same name.
 
 Supported options:
@@ -17,7 +17,7 @@ Supported options:
     Capture the output of an external command (given by the positional
     arguments) and convert ANSI escape sequences in the output to HTML.
 
-    If the `coloredlogs' program is attached to an interactive terminal it will
+    If the `colouredlogs' program is attached to an interactive terminal it will
     write the generated HTML to a temporary file and open that file in a web
     browser, otherwise the generated HTML will be written to standard output.
 
@@ -30,8 +30,8 @@ Supported options:
 
   -d, --demo
 
-    Perform a simple demonstration of the coloredlogs package to show the
-    colored logging on an interactive terminal.
+    Perform a simple demonstration of the colouredlogs package to show the
+    coloured logging on an interactive terminal.
 
   -h, --help
 
@@ -50,15 +50,15 @@ import webbrowser
 from humanfriendly.terminal import connected_to_terminal, output, usage, warning
 
 # Modules included in our package.
-from coloredlogs.converter import capture, convert
-from coloredlogs.demo import demonstrate_colored_logging
+from colouredlogs.converter import capture, convert
+from colouredlogs.demo import demonstrate_coloured_logging
 
 # Initialize a logger for this module.
 logger = logging.getLogger(__name__)
 
 
 def main():
-    """Command line interface for the ``coloredlogs`` program."""
+    """Command line interface for the ``colouredlogs`` program."""
     actions = []
     try:
         # Parse the command line arguments.
@@ -71,7 +71,7 @@ def main():
                 actions.append(functools.partial(convert_command_output, *arguments))
                 arguments = []
             elif option in ('-d', '--demo'):
-                actions.append(demonstrate_colored_logging)
+                actions.append(demonstrate_coloured_logging)
             elif option in ('-h', '--help'):
                 usage(__doc__)
                 return
@@ -89,7 +89,7 @@ def main():
 
 def convert_command_output(*command):
     """
-    Command line interface for ``coloredlogs --to-html``.
+    Command line interface for ``colouredlogs --to-html``.
 
     Takes a command (and its arguments) and runs the program under ``script``
     (emulating an interactive terminal), intercepts the output of the command

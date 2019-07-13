@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 """
-Generate screenshots of `coloredlogs` in a terminal emulator.
+Generate screenshots of `colouredlogs` in a terminal emulator.
 
-When the `coloredlogs` documentation was originally written, the screenshots
+When the `colouredlogs` documentation was originally written, the screenshots
 were created manually, which had the following consequences:
 
 - Screen shots were never updated, even after making code changes that affected
@@ -41,9 +41,9 @@ import sys
 import time
 
 # External dependencies.
-import coloredlogs
+import colouredlogs
 from capturer import CaptureOutput
-from coloredlogs.converter import EIGHT_COLOR_PALETTE
+from colouredlogs.converter import EIGHT_COLOUR_PALETTE
 from executor import execute, quote, which
 from humanfriendly import compact, format_path
 from humanfriendly.terminal import ansi_strip, ansi_wrap
@@ -57,11 +57,11 @@ FONT_NAME = 'Monaco'
 FONT_SIZE = 14
 """The pixel size of the font used in screen shots."""
 
-TEXT_COLOR = 'white'
-"""The default text color used in screen shots."""
+TEXT_COLOUR = 'white'
+"""The default text colour used in screen shots."""
 
-BACKGROUND_COLOR = 'black'
-"""The default background color used in screen shots."""
+BACKGROUND_COLOUR = 'black'
+"""The default background colour used in screen shots."""
 
 # Initialize a logger for this program.
 logger = VerboseLogger('screenshot-generator')
@@ -69,7 +69,7 @@ logger = VerboseLogger('screenshot-generator')
 
 def main():
     """Command line interface."""
-    coloredlogs.install(level='debug')
+    colouredlogs.install(level='debug')
     arguments = sys.argv[1:]
     if arguments:
         interpret_script(arguments[0])
@@ -104,9 +104,9 @@ def generate_screenshots():
             'urxvt',
             # Enforce a default geometry.
             '-geometry', '98x30',
-            # Set the text and background color.
-            '-fg', TEXT_COLOR,
-            '-bg', BACKGROUND_COLOR,
+            # Set the text and background colour.
+            '-fg', TEXT_COLOUR,
+            '-bg', BACKGROUND_COLOUR,
             # Set the font name and pixel size.
             '-fn', 'xft:%s:pixelsize=%i' % (FONT_NAME, FONT_SIZE),
             # Set the window title.
@@ -121,9 +121,9 @@ def generate_screenshots():
             # which in turn enables it to respect the '--geometry' option.
             urxvt_command.insert(0, 'qtile-run')
             urxvt_command.insert(1, '-f')
-        # Apply the Ubuntu color scheme to urxvt.
-        for index, css_color in enumerate(EIGHT_COLOR_PALETTE):
-            urxvt_command.extend(('--color%i' % index, css_color))
+        # Apply the Ubuntu colour scheme to urxvt.
+        for index, css_colour in enumerate(EIGHT_COLOUR_PALETTE):
+            urxvt_command.extend(('--colour%i' % index, css_colour))
         # Add the command that should run inside the terminal.
         urxvt_command.extend(('-e', 'sh', '-c', 'setterm -cursor off; %s' % quote(command_line)))
         # Launch urxvt.
@@ -137,7 +137,7 @@ def generate_screenshots():
             execute('import', '-window', random_title, image_file)
             # Auto-trim the screen shot, then give it a 5px border.
             execute('convert', image_file, '-trim',
-                    '-bordercolor', BACKGROUND_COLOR,
+                    '-bordercolour', BACKGROUND_COLOUR,
                     '-border', '5', image_file)
         finally:
             execute('wmctrl', '-c', random_title)

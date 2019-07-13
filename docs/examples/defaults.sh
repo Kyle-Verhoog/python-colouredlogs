@@ -1,1 +1,1 @@
-coloredlogs --demo
+colouredlogs --demo
