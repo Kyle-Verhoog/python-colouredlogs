@@ -11,6 +11,14 @@ to `semantic versioning`_.
 .. _Keep a Changelog: http://keepachangelog.com/
 .. _semantic versioning: http://semver.org/
 
+`Release 10.0.1`_ (2019-07-13)
+------------------------------
+
+- Change all "color" references to "colour".
+- A bug with UTC timezones was fixed in the tests.
+
+.. _Release 10.0.1: https://github.com/kyle-verhoog/python-colouredlogs/compare/10.0...10.0.1
+
 `Release 10.0`_ (2018-05-13)
 ----------------------------
 
