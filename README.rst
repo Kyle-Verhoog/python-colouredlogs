@@ -1,5 +1,5 @@
 colouredlogs: Coloured terminal output for Python's logging module
-================================================================
+==================================================================
 
 .. image:: https://travis-ci.org/xolox/python-colouredlogs.svg?branch=master
    :target: https://travis-ci.org/xolox/python-colouredlogs
@@ -121,13 +121,13 @@ tell it to. There are three ways to do that:
    Support for the ``%f`` directive was added to `release 9.3`_ (due to `#45`_).
 
 Changing text styles and colours
--------------------------------
+--------------------------------
 
 The online documentation contains `an example of customizing the text styles and
 colours <https://colouredlogs.readthedocs.io/en/latest/#changing-the-colours-styles>`_.
 
 Coloured output from cron
-------------------------
+-------------------------
 
 When `colouredlogs` is used in a cron_ job, the output that's e-mailed to you by
 cron won't contain any ANSI escape sequences because `colouredlogs` realizes
