@@ -213,7 +213,7 @@ WINDOWS = sys.platform.startswith('win')
 NEED_COLORAMA = WINDOWS
 
 # Semi-standard module versioning.
-__version__ = '10.0'
+__version__ = '10.0.1'
 
 DEFAULT_LOG_LEVEL = logging.INFO
 """The default log level for :mod:`colouredlogs` (:data:`logging.INFO`)."""
@@ -237,23 +237,23 @@ instead it's printed to the terminal without any translation.
 """
 
 DEFAULT_FIELD_STYLES = dict(
-    asctime=dict(colour='green'),
-    hostname=dict(colour='magenta'),
-    levelname=dict(colour='black', bold=CAN_USE_BOLD_FONT),
-    programname=dict(colour='cyan'),
-    name=dict(colour='blue'))
+    asctime=dict(color='green'),
+    hostname=dict(color='magenta'),
+    levelname=dict(color='black', bold=CAN_USE_BOLD_FONT),
+    programname=dict(color='cyan'),
+    name=dict(color='blue'))
 """Mapping of log format names to default font styles."""
 
 DEFAULT_LEVEL_STYLES = dict(
-    spam=dict(colour='green', faint=True),
-    debug=dict(colour='green'),
-    verbose=dict(colour='blue'),
+    spam=dict(color='green', faint=True),
+    debug=dict(color='green'),
+    verbose=dict(color='blue'),
     info=dict(),
-    notice=dict(colour='magenta'),
-    warning=dict(colour='yellow'),
-    success=dict(colour='green', bold=CAN_USE_BOLD_FONT),
-    error=dict(colour='red'),
-    critical=dict(colour='red', bold=CAN_USE_BOLD_FONT))
+    notice=dict(color='magenta'),
+    warning=dict(color='yellow'),
+    success=dict(color='green', bold=CAN_USE_BOLD_FONT),
+    error=dict(color='red'),
+    critical=dict(color='red', bold=CAN_USE_BOLD_FONT))
 """Mapping of log level names to default font styles."""
 
 DEFAULT_FORMAT_STYLE = '%'
